@@ -1,32 +1,24 @@
 # Site settings
-title: Jekyll-Uno
-description: 'Jekyll-Uno - a minimal, responsive theme for Jekyll'
-url: 'https://syleemj23.github.io/'
-baseurl: '/jekyll-uno'
-# google_analytics: 'UA-XXXXXX-X'
-# disqus_shortname: 'your-disqus-name'
-# disable_landing_page: true
+title: Thomas Zühlke
+description: 'Business Card Page'
+url: 'http://thomas.zuehlke.family'
+baseurl: ''
+profilepic: '/images/tzuehlke.jpg'
+bkimage: '/images/bk1.jpg'
+google_analytics: UA-XXXXXX-X
+font_awesome: 'XXXXXXXXXX.js'
 
 author:
-  name: 'Josh Gerdes'
-  email: josh@joshgerdes.com
-  twitter_username: joshgerdes
-  facebook_username: joshgerdes
-  github_username:  joshgerdes
-  linkedin_username:  joshgerdes
-
-defaults:
-  -
-    scope:
-      path: ''
-      type: 'posts'
-    values:
-        layout: 'post'
+  name: 'Thomas Zühlke'
+  email: info@thomas-zuehlke.de
+  twitter_username: thomzuehlke
+#  facebook_username: joshgerdes
+  github_username:  tzuehlke
+  linkedin_username:  thomas-zühlke-889182165
+  meetup_name: Azure-Meetup-Rostock-MV
 
 # Build settings
 destination: _site
-paginate: 10
-permalink: /:year/:title/
 markdown: kramdown
 highlighter: rouge
 
@@ -40,5 +32,5 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-plugins: ['jekyll-paginate']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+#plugins: ['jekyll-paginate']
+exclude: ['README.md', 'screenshot-overview.png']
