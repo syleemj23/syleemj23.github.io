@@ -5,7 +5,7 @@ description: subtitle | affiliations | motto
 
 baseurl: syleemj23/syleemj23.github.io #name of GitHub repository
 url: "" #custom url to be used instead of GitHub repository
-email: #
+email: syleemj23@gmail.com#
 
 
 highlighter: rouge
@@ -19,8 +19,8 @@ paginate_path: /blog/page:num/
 # Social media links in footer
 facebook: "#"
 twitter: "#"
-linkedin: "#"
-github: "#"
+linkedin: "syleemj23"
+github: "syleemj23"
 researchgate: "#"
 orcid: "#"
 
