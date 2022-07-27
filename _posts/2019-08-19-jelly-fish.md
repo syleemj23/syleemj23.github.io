@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  Test Blog Entry 1
-description: HyperLink included
 ---
 
 Visible, invisible,  
