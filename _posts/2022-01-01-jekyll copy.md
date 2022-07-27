@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Test"
+title: Test Blog Entry 2
 ---
 
 “My will? Yes, certainly, I know that,” said the doctor, a trifle sharply. “You have told me so.”

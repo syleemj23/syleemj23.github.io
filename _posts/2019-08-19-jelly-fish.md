@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  A Jelly-Fish
+title:  Test Blog Entry 1
+description: HyperLink included
 ---
 
 Visible, invisible,  
