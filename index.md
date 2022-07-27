@@ -7,8 +7,10 @@ profile:
 published: true
 ---
 
-[Gradfolio](https://github.com/jitinnair1/gradfolio){:target="_blank"} is a responsive, dark-mode ready Jekyll theme designed keeping academia in mind. The easiest way to install the theme is to fork it using GitHub. Check the README file for [instructions](https://github.com/jitinnair1/gradfolio#installation){:target="_blank"}.
+Welcome to my homepage.
 
-If you want to use this space to write your biography here, edit the `index.md` file. You can put a picture in, too. Rename your picture to `profile.png` and put it in the `assets/images/` folder.
+I am Sangyeon Lee from the Republic of Korea and currently pursuing a Master's degree in Digital Forensics at George Mason University. As one of my backgrounds is Computer Science, one of my interests is to develop computer forensic tools. 
 
-The social-icons footer can be used to link profiles from GitHub, OrcID and ReasearchGate aprart form the usual Twitter, LinkedIn and Facebook. You can add your user ID in the `_config.yml` file to link your accounts.
+I maintain both my projects and my learning through this homepage. 
+
+Please contact me through one of the contact methods below for either my resume or any question.
