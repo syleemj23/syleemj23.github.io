@@ -1,108 +1,65 @@
-### Site Settings ###
-title               : Sangyeon Lee
-description         : >-
-                      Thanks for visiting my homepage.
-baseurl             : ""                     # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
-#repository          : syleemj23/syleemj23.github.io     # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
-remote_theme        : youssefraafatnasry/portfolyou
-open_new_tab        : false                             # Opens external URLs in new tab (works for posts, projects and navbar only)
+### your site title here
+
+title: Your Name
+description: subtitle | affiliations | motto
+
+baseurl: /gradfolio #name of GitHub repository
+url: "" #custom url to be used instead of GitHub repository
+email: #
 
 
-### Plugins ###
-plugins:
-  - jemoji
+highlighter: rouge
+markdown: kramdown
 
+# Pagination
+paginate: 4
+permalink: /blog/:year/:title/
+paginate_path: /blog/page:num/
 
-### Navbar Settings ###
-nav_exclude:                                            # The following paths are excluded from navbar
-  - pages/tags.html
-  - pages/404.html
-  - pages/index.md
-  - documentation/partials/**                           # For Documentation Only
+# Social media links in footer
+facebook: "#"
+twitter: "#"
+linkedin: "#"
+github: "#"
+researchgate: "#"
+orcid: "#"
 
+highlighter: rouge
+markdown: kramdown
 
-### Author Info ###
-author:
-  name              : Sangyeon Lee
-  image             : /img/MyPicture.jpg
-#  behance           : your_username
-# dribbble          : your_username
-  email             : syleemj23@gmail.com
-#  facebook          : your_username
-  github            : syleemj23
-# gitlab            : your_username
-# instagram         : your_username
-# kaggle            : your_username
-  linkedin          : syleemj23
-#  medium            : your_username
-# soundcloud        : your_username
-# spotify           : your_username
-# stackoverflow     : your_user_id
-# tumblr            : your_username.tumblr.com
-# twitch            : your_username
-#  twitter           : your_username
-# vimeo             : your_username
-# youtube           : your_channel_name
-# keybase           : your_username
+# Tracker
+analytics:
 
+#optimization -> compress.html
+compress_html:
+  clippings: [html,div, p, ul, td, h1, h2, h3, h4,link, meta, footer, nav, img, header, hr, br, head, style, li, ul, ol, time, main, script, title]
+  comments: ["<!-- ", " -->"]
+  endings: [all]
+  ignore:
+    envs: [local]
+  blanklines: false
+  profile: false
+  startings: []
 
-### Posts ###
-permalink: /blog/:title
-
-
-### Collections ###
+#collection
 collections:
   projects:
     output: true
-    permalink: /projects/:name
-  elements:                                             # For Documentation Only
-    output: true                                        # For Documentation Only
+    permalink: /projects/:path/
 
+sass:
+  sass_dir: /assets/css/_sass
+  style: compressed
 
-### Disqus ###
-disqus:
-  shortname: your-short-name-disqus                     # Your website Shortname on disqus
+include:
+  - _pages
 
-
-### Analytics ###
-analytics:
-  enabled: false                                        # Set true to enable analytics
-  google:
-    tracking_id: your-google-tracking-id
-
-
-### Buy me a coffee ###
-# See https://www.buymeacoffee.com/
-buymeacoffee:
-  enabled: false
-  username: your_username
-  color: "#007bff"
-  message: "Thank you for visiting."                    # Message to be displayed aside from the button for a few seconds.
-  description: "Support me on Buy me a coffee!"
-
-
-### Defaults for collections ###
-defaults:
-  - scope:
-      path: ""
-      type: "projects"
-    values:
-      layout: "page"
-  - scope:                                              # For Documentation Only
-      path: ""                                          # For Documentation Only
-      type: "elements"                                  # For Documentation Only
-    values:                                             # For Documentation Only
-      layout: "element"                                 # For Documentation Only
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      comments: false                                   # Set to true to enable disqus comments
-
-
-### Exclude from processing ###
 exclude:
   - README.md
-  - CONTRIBUTING.md
-  - LICENSE
-  - "*.log"
+  - LICENSE.md
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-email-protect
+  - jekyll-target-blank
