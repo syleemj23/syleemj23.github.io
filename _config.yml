@@ -159,8 +159,8 @@ kramdown:
 include: ['_pages']
 exclude:
   - bin
-  #- Gemfile
-  #- Gemfile.lock
+  - Gemfile
+  - Gemfile.lock
   - vendor
 keep_files:
   - CNAME
