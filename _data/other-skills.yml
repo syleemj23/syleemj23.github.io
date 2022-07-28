@@ -1,0 +1,11 @@
+- name: Media Forensics
+  percentage: 85
+  color: info
+
+- name: Memory Forensics
+  percentage: 80
+  color: success
+
+- name: Network Forensics
+  percentage: 75
+  color: warning

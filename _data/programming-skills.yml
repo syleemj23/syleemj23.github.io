@@ -1,0 +1,11 @@
+- name: C/C++
+  percentage: 90
+  color: danger
+
+- name: Android (Java)
+  percentage: 80
+  color:
+
+- name: Python
+  percentage: 70
+  color: secondary
