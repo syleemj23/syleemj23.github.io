@@ -26,8 +26,8 @@ nav_exclude:                                            # The following paths ar
 ### Author Info ###
 author:
   name              : Sangyeon Lee
-  image             : /portfolYOU/imgs/MyPicture.jpg    # [GitHub] /imgs/MyPicture.jpg
-                                                        # [LoopBack] /portfolYOU/imgs/MyPicture.jpg
+                    # [GitHub] /imgs/MyPicture.jpg, [LoopBack] /portfolYOU/imgs/MyPicture.jpg
+  image             : /imgs/MyPicture.jpg
 # behance           : your_username
 # dribbble          : your_username
   email             : syleemj23@gmail.com
