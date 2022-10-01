@@ -1,9 +1,13 @@
 - title: Student, Oregon State University CS
   from: 2017
   to: 2020
-  description: Some information will come
+  description: I both acquired theoratical knowledge and developed various programming skills. 
+               The knowledge includes various sub-filds of computer science, such as operating systems and computer architecture.
+               Especially, I had a chance to perfrom a research on improving GPU performance by utilizing temporal locality and was able to see some performance gain.
+               The programming skills include the proficiency with both programing languages, scuh as C++ and Haskell, and API, such as OpenGL and OpenCL.
 
 - title: Student, George Mason University DFOR
   from: 2021
   to: present
-  description: Some information will come
+  description: I have been learning about various sub-fields of digital forensics, such as network forensics and memory forensics.
+               I am currently growing my interests in both malware analysis and network forensics.

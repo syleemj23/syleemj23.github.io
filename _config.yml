@@ -3,8 +3,10 @@ title               : Sangyeon Lee
 description         : >-
                       Welcome to my homepage.
                       I maintain both my projects and learnings through this homepage.
-baseurl             : ""                     # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
-repository          : syleemj23/syleemj23.github.io     # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
+baseurl             : "/portfolYOU"                                # [GitHub] ""
+                                                        # [LoopBack] "/portfolYOU"
+repository          : YoussefRaafatNasry/portfolYOU     # [GitHub] syleemj23/syleemj23.github.io
+                                                        # [LoopBack] YoussefRaafatNasry/portfolYOU
 remote_theme        : YoussefRaafatNasry/portfolYOU
 open_new_tab        : false                             # Opens external URLs in new tab (works for posts, projects and navbar only)
 
@@ -24,7 +26,8 @@ nav_exclude:                                            # The following paths ar
 ### Author Info ###
 author:
   name              : Sangyeon Lee
-  image             : /imgs/MyPicture.jpg
+  image             : /portfolYOU/imgs/MyPicture.jpg    # [GitHub] /imgs/MyPicture.jpg
+                                                        # [LoopBack] /portfolYOU/imgs/MyPicture.jpg
 # behance           : your_username
 # dribbble          : your_username
   email             : syleemj23@gmail.com
