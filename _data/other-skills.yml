@@ -6,6 +6,14 @@
   percentage: 80
   color: success
 
+- name: Malware Reverse Engineering
+  percentage: 80
+  color:
+
+- name: Mobile Device Forensics
+  percentage: 80
+  color: danger
+
 - name: Network Forensics
   percentage: 75
   color: warning

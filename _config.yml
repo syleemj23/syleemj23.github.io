@@ -1,8 +1,8 @@
 ### Site Settings ###
 title               : Sangyeon Lee
 description         : >-
-                      Welcome to my homepage.
-                      I maintain both my projects and learnings through this homepage.
+                      Welcome to my homepage.<br />
+                      My projects and learnings maintained through this homepage.
                     # [GitHub] "", [LoopBack] "/portfolYOU"
 baseurl             : ""                               
                     # [GitHub] syleemj23/syleemj23.github.io, [LoopBack] YoussefRaafatNasry/portfolYOU
