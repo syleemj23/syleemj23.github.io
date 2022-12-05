@@ -6,6 +6,7 @@ description: system memory acquisition, application memory acquisition, string a
 ---
 
 <!--- Image from https://www.flickr.com/photos/grahamsblog/5695056315 -->
+
 # <u> Executive Summary </u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Memory acquisition with WhatsApp on an Android device has been attempted for both the system memory and the application memory. Though the system memory acquisition has failed, the application memory acquisition still has provided many digital artifacts that possibly indicate to the user’s certain activities with WhatsApp. Such activities include whether a user has: 
 * Added another new user
@@ -276,5 +277,5 @@ python3 <fridump Directory>/fridump.py -U -s -o <Output Directory> <Application 
 ![](/imgs/Project(1)_Picture6.png)
 ![](/imgs/Project(1)_Picture7.png)
 
-# <u> Analysis </u>
+# <u> Conclusion </u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It was not an easy task to acquire the memory contents from an Android device, and I could not acquire the system memory contents. At this point, I am not sure if the cause of the failed acquisition is associated with a higher version of Android. The identification of this will be continued. However, even the application memory contents have left a variety of information and future tasks. For instance, digital artifacts associated with thread activities exist that seemingly indicate if the user on a device has read a message sent by the other users in a chatroom. On the other hand, it could be future work to verify the indication of the digital artifacts with other types of digital artifacts. Such digital artifacts could be the examination of strings seemingly associated with database activities. As mentioned above, such a database-associated string has been found that could indicate that a user in a chatroom is notified of a message sent by him or her having been read by the intended recipient. In addition to this string, many database-associated strings have been discovered, so their further analysis could help verify the possible indication from the thread-associated string that the user of a device has read a specific message.
