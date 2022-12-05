@@ -196,4 +196,34 @@ description: system memory acquisition, application memory acquisition, string a
 ### <u> Analysis </u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The analysis of the application memory contents for WhatsApp has been performed on the strings stored in the memory contents. Especially, the strings that possibly indicate each of the last 5 actions in the list of 6 actions above have been looked for. As explained in the too table above, Device A is the main testing device while Device B is the secondary device that communicates with the main testing device. The screenshot below shows WhatsApp on Device A after all the 6 actions in the list have been taken.
 
-![1](/imgs/WhatsApp.jpg)
+![](/imgs/Project(1)_WhatsApp.jpg)
+
+##### ● From the memory contents after the user on Device A adds the user on Device B
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As might be expected, the phone numbers of both users have been discovered. In addition, Test2, the WhatsApp name of the user on Device B, has been found as well. These digital artifacts exist in various forms of strings and could be used in identifying if a WhatsApp user has registered another specific user. The 1st following screenshot shows both the WhatsApp name and the phone number of the user on Device B. The phone number is redacted for privacy purposes.
+
+![](/imgs/Project(1)_Picture1.png)
+
+##### ● From the memory contents after the user on Device A send a message to the user on Device B
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As might be expected, the contents of a message sent to the user on Device B have been discovered. This digital artifact could be used in identifying the messages sent to a specific user. The following screenshot shows both the contents of a message sent to the user on Device B and the phone number of the user. The phone number is redacted for privacy purposes.
+
+![](/imgs/Project(1)_Picture2.png)
+
+##### ● From the memory contents after the user on Device B read the message from the user on Device A.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interestingly, a string seemingly associated with the thread activity of WhatsApp has been discovered. The string includes, as its sub-string, read-receipt-received that might indicate that the user on Device B has read the message. This digital artifact could be used in identifying if the other user of a conversation with the user of a device has read a message sent by the device user. In addition, the string of this digital artifact also contains a part of the phone number of the user on Device B as its sub-string. The following screenshot shows this digital artifact, and the partial phone number is redacted for privacy purposes.
+
+![](/imgs/Project(1)_Picture3.png)
+
+##### ● From the memory contents after the user on Device B send another message to the user on Device A.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Though the user on Device A has not read a message sent by the user on Device B, the contents of the message have been found, together with the phone number of the user on Device B. In addition, both the string “Message from Test2” and the string “1 new message” also have been discovered. These digital artifacts might be collectively used in identifying if the user on a device has any message not read. The 1st screenshot shows both the contents of a message sent by the user on Device B and the user’s phone number. The 2nd screenshot shows both the strings “Message from Test2” and “1 new message”. The phone number is redacted for privacy purposes.
+
+![](/imgs/Project(1)_Picture4.png)
+![](/imgs/Project(1)_Picture5.png)
+
+##### ● From the memory contents after the user on Device A read the message from the user on Device B
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Likewise with the memory contents after the user on Device B read the message from the user on Device A, a string seemingly associated with the thread activity of WhatsApp has been discovered. Instead of read-receipt-received, messages-read has been discovered, as a sub-string along with the partial phone number of the user on Device B, which might indicate that the user on Device A has read a message sent by the user on Device B. In addition, a string seemingly associated with database-update activities also has been found that might indicate that the user on Device on B is notified of the sent message having been read by the user on Device A. These digital artifacts might be collectively used in identifying if the user on a device has read a certain message. The 1st screenshot shows the thread-associated while the 2nd screenshot shows string the database-associated string.
+
+![](/imgs/Project(1)_Picture6.png)
+![](/imgs/Project(1)_Picture7.png)
+
+### <u> Analysis </u>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It was not an easy task to acquire the memory contents from an Android device, and I could not acquire the system memory contents. At this point, I am not sure if the cause of the failed acquisition is associated with a higher version of Android. The identification of this will be continued. However, even the application memory contents have left a variety of information and future tasks. For instance, digital artifacts associated with thread activities exist that seemingly indicate if the user on a device has read a message sent by the other users in a chatroom. On the other hand, it could be future work to verify the indication of the digital artifacts with other types of digital artifacts. Such digital artifacts could be the examination of strings seemingly associated with database activities. As mentioned above, such a database-associated string has been found that could indicate that a user in a chatroom is notified of a message sent by him or her having been read by the intended recipient. In addition to this string, many database-associated strings have been discovered, so their further analysis could help verify the possible indication from the thread-associated string that the user of a device has read a specific message.
