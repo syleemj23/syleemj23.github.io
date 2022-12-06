@@ -23,7 +23,7 @@ description: system memory acquisition, application memory acquisition, string a
 | :-: | :-: | :-- | :-- |
 | Samsung Galaxy Tab A7 Lite <br> (SM-T220) | Hardware | [OS]Android 12 <br> [Kernel]T220XXU1BVGB   | (Device A) <br> To be used as a main testing device |
 | Samsung Galaxy Z Flip 4 <br> (SM-F721U1)  | Hardware | [OS]Android 12 <br> [Kernel]F721U1UES1AVJ7 | (Device B) <br> To be used as a secondary device that communicates with the in testing device |
-| Samsung Galaxy Book Pro 360 <br> (NP950QDB-KB1US) | Hardware | [OS]Windows 10 <br> [Build]19045.2251  | (Device A) <br> To be used as a workstation |
+| Samsung Galaxy Book Pro 360 <br> (NP950QDB-KB1US) | Hardware | [OS]Windows 10 <br> [Build]19045.2251  | To be used as a workstation |
 | SM-T220 Firmware | Software | T220XXU1BVGB | To be used as the base binary for a rooted custom binary |
 | Magisk | Software | 25.2   | To create a rooted custom binary |
 | Odin3 | Software | 3.14.4   | To install the custom recovery onto the testing device for rooting |
