@@ -178,7 +178,7 @@ su
 cd /sdcard
 insmod lime.ko “path=sysmem.lime format=lime”
 ```
-##### ● Acquire and analyze the system-memory contents
+##### ● Acquire and analyze the application-memory contents
   1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
