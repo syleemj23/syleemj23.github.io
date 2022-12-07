@@ -64,7 +64,7 @@ collections:
 
 ### Disqus ###
 disqus:
-  shortname: your-short-name-disqus                     # Your website Shortname on disqus
+  shortname: syleemj23-github-io                     # Your website Shortname on disqus
 
 
 ### Analytics ###
@@ -95,7 +95,7 @@ defaults:
       path: ""
       type: "posts"
     values:
-      comments: false                                   # Set to true to enable disqus comments
+      comments: true                                   # Set to true to enable disqus comments
 
 
 ### Exclude from processing ###

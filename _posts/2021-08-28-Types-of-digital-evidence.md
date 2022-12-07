@@ -3,7 +3,7 @@ title: Types of Digital Evidence
 tags: [Digital Evidence]
 style: fill
 color: secondary
-comments: false
+comments: true
 description: Exculpatory vs. Inculpatory <br /> Class vs. Individual
 ---
 * **Evidence in relation to Suspects**

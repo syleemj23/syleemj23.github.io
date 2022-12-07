@@ -3,7 +3,7 @@ title: Warrantless Searches - Incomplete Yet -
 tags: [Warrant, Search]
 style: fill
 color: primary
-comments: false
+comments: true
 description: Consent, Emergency, Plain View, Decease, Border Crossing
 ---
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The followings are the cases where law enforcement (LE) can perform searches without warrants, but whether it is allowed to inspect the contents of a device is another consideration.
