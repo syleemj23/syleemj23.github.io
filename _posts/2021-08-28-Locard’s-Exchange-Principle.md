@@ -3,7 +3,7 @@ title: Locard’s Exchange Principle
 tags: [Principle]
 style: fill
 color: success
-comments: true
+comments: false
 description: Physical Traces, Digital Traces
 ---
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edmund Locard said that it is impossible for a criminal to act without leaving traces of this presence, especially considering the intensity of a crime.
