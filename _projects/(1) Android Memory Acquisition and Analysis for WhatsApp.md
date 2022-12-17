@@ -157,7 +157,7 @@ CLANG_TRIPLE	?= aarch64-linux-gnu-
 ```consol
 chmod 744 build_kernel.sh
 ```
-  4. Compile a *LiME* module
+  1. Compile a *LiME* module
        + Modify the existing values in the file *Makefile* to the following values:
 ```consol
 KDIR ?= $(HOME)/<Kernel_Directory>/out/
@@ -166,12 +166,12 @@ default:
    $(MAKE) ARCH=arm64 CROSS_COMPILE=$(CCPATH) -C $(KDIR) M=$(PWD)
 ```
        + Execute the command line *make*
-  5. Copy the LiME module file *lime.ko* to *Tsurgi*
-  6. Copy *lime.ko* to the main testing device by executing the following command line 
+  1. Copy the LiME module file *lime.ko* to *Tsurgi*
+  2. Copy *lime.ko* to the main testing device by executing the following command line 
 ```consol
 adb push < lime.ko Path> /sdcard/lime.ko
 ```
-  7. Acquire the system memory contents from the main testing device by executing the following command lines:
+  1. Acquire the system memory contents from the main testing device by executing the following command lines:
 ```consol
 adb shell
 su
@@ -179,7 +179,7 @@ cd /sdcard
 insmod lime.ko “path=sysmem.lime format=lime”
 ```
 ##### ● Acquire and analyze the application-memory contents
-  8. Download the necessary files on *Tsurgi*
+  1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
 ```consol
@@ -199,11 +199,11 @@ frida-ps --version
           - Find the article with the same version as *Frida tools*
           - Click *Assets*
           - Download the file with *frida-server-Version-android-arm64.xz* as its name <br> (*Version* is the version of *Frida tools* in number)
-  9. Uncompress *frida-server* by executing the following command line
+  1. Uncompress *frida-server* by executing the following command line
 ```consol
 unxz <frida-server file>
 ```
-  10. Run the un-compressed *frida-server* on the main testing device
+  2. Run the un-compressed *frida-server* on the main testing device
        + Copy *frida-server* to the main testing device by executing the following command line
 ```consol
  adb push <frida-server file> /data/local/tmp*
@@ -226,12 +226,12 @@ chmod 755 <frida-server file>
 ```consol
 ps -e \| grep -i frida-server
 ```
-  11. Get back to *Tsurgi*
-  12. Identify the name of the process associated with *WhatsApp* by executing the following command line
+  3. Get back to *Tsurgi*
+  4. Identify the name of the process associated with *WhatsApp* by executing the following command line
 ```consol
 frida-ps -U
 ```
-  13. Acquire the application memory contents from the main testing device
+  6. Acquire the application memory contents from the main testing device
        + Take one of the following actions
           - Open WhatsApp from the main testing device
           - Add another user associated the secondary device from the main testing device
@@ -242,7 +242,8 @@ frida-ps -U
        + Acquire the application memory contents by executing the following command line
 ```consol
 python3 <fridump Directory>/fridump.py -U -s -o <Output Directory> <Application Name>
-```    + Repeat *Step 13* until all the actions above are exhausted
+```
+       + Repeat *Steps 6* until all the actions above are exhausted
 
 # <u> Analysis </u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The analysis of the application memory contents for WhatsApp has been performed on the strings stored in the memory contents. Especially, the strings that possibly indicate each of the last 5 actions in the list of 6 actions above have been looked for. As explained in the too table above, Device A is the main testing device while Device B is the secondary device that communicates with the main testing device. The screenshot below shows WhatsApp on Device A after all the 6 actions in the list have been taken.
