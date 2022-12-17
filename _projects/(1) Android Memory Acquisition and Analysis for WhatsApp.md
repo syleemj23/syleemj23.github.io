@@ -179,9 +179,7 @@ cd /sdcard
 insmod lime.ko “path=sysmem.lime format=lime”
 ```
 ##### ● Acquire and analyze the application-memory contents
-<ol>
-
-  <li>1. Download the necessary files on *Tsurgi*</li>
+  1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
 ```consol
@@ -201,11 +199,11 @@ frida-ps --version
           - Find the article with the same version as *Frida tools*
           - Click *Assets*
           - Download the file with *frida-server-Version-android-arm64.xz* as its name <br> (*Version* is the version of *Frida tools* in number)
-  <li> Uncompress *frida-server* by executing the following command line</li>
+  2. Uncompress *frida-server* by executing the following command line
 ```consol
 unxz <frida-server file>
 ```
-  <li> Run the un-compressed *frida-server* on the main testing device</li>
+  3. Run the un-compressed *frida-server* on the main testing device
        + Copy *frida-server* to the main testing device by executing the following command line
 ```consol
  adb push <frida-server file> /data/local/tmp*
@@ -228,12 +226,12 @@ chmod 755 <frida-server file>
 ```consol
 ps -e \| grep -i frida-server
 ```
-  <li> Get back to *Tsurgi*</li>
-  <li> Identify the name of the process associated with *WhatsApp* by executing the following command line</li>
+  4. Get back to *Tsurgi*
+  5. Identify the name of the process associated with *WhatsApp* by executing the following command line
 ```consol
 frida-ps -U
 ```
-  <li> Acquire the application memory contents from the main testing device</li>
+  6. Acquire the application memory contents from the main testing device
        + Take one of the following actions
           - Open WhatsApp from the main testing device
           - Add another user associated the secondary device from the main testing device
@@ -246,7 +244,7 @@ frida-ps -U
 python3 <fridump Directory>/fridump.py -U -s -o <Output Directory> <Application Name>
 ```
        + Repeat *Steps 6* until all the actions above are exhausted
-</ol>
+
 # <u> Analysis </u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The analysis of the application memory contents for WhatsApp has been performed on the strings stored in the memory contents. Especially, the strings that possibly indicate each of the last 5 actions in the list of 6 actions above have been looked for. As explained in the too table above, Device A is the main testing device while Device B is the secondary device that communicates with the main testing device. The screenshot below shows WhatsApp on Device A after all the 6 actions in the list have been taken.
 
