@@ -54,14 +54,12 @@ author:
 ### Posts ###
 permalink: /blog/:title
 
-
 ### Collections ###
 collections:
   projects:
     output: true
     permalink: /projects/:name
-
-
+  
 ### Disqus ###
 disqus:
   shortname: syleemj23-github-io                     # Your website Shortname on disqus
@@ -96,7 +94,6 @@ defaults:
       type: "posts"
     values:
       comments: true                                   # Set to true to enable disqus comments
-
 
 ### Exclude from processing ###
 exclude:
