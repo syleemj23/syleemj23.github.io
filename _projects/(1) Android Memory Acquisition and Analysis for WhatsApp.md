@@ -157,7 +157,7 @@ CLANG_TRIPLE	?= aarch64-linux-gnu-
 ```consol
 chmod 744 build_kernel.sh
 ```
-  1. Compile a *LiME* module
+  4. Compile a *LiME* module
        + Modify the existing values in the file *Makefile* to the following values:
 ```consol
 KDIR ?= $(HOME)/<Kernel_Directory>/out/
@@ -166,12 +166,12 @@ default:
    $(MAKE) ARCH=arm64 CROSS_COMPILE=$(CCPATH) -C $(KDIR) M=$(PWD)
 ```
        + Execute the command line *make*
-  1. Copy the LiME module file *lime.ko* to *Tsurgi*
-  2. Copy *lime.ko* to the main testing device by executing the following command line 
+  5. Copy the LiME module file *lime.ko* to *Tsurgi*
+  6. Copy *lime.ko* to the main testing device by executing the following command line 
 ```consol
 adb push < lime.ko Path> /sdcard/lime.ko
 ```
-  1. Acquire the system memory contents from the main testing device by executing the following command lines:
+  7. Acquire the system memory contents from the main testing device by executing the following command lines:
 ```consol
 adb shell
 su
@@ -199,11 +199,11 @@ frida-ps --version
           - Find the article with the same version as *Frida tools*
           - Click *Assets*
           - Download the file with *frida-server-Version-android-arm64.xz* as its name <br> (*Version* is the version of *Frida tools* in number)
-  1. Uncompress *frida-server* by executing the following command line
+  2. Uncompress *frida-server* by executing the following command line
 ```consol
 unxz <frida-server file>
 ```
-  2. Run the un-compressed *frida-server* on the main testing device
+  3. Run the un-compressed *frida-server* on the main testing device
        + Copy *frida-server* to the main testing device by executing the following command line
 ```consol
  adb push <frida-server file> /data/local/tmp*
@@ -226,8 +226,8 @@ chmod 755 <frida-server file>
 ```consol
 ps -e \| grep -i frida-server
 ```
-  3. Get back to *Tsurgi*
-  4. Identify the name of the process associated with *WhatsApp* by executing the following command line
+  4. Get back to *Tsurgi*
+  5. Identify the name of the process associated with *WhatsApp* by executing the following command line
 ```consol
 frida-ps -U
 ```
