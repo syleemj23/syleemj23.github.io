@@ -39,7 +39,7 @@ description: system memory acquisition, application memory acquisition, string a
 
 
 # <u> Overall Procedure </u>
-##### ● Prepare for Memory Acquisition
+● Prepare for Memory Acquisition
   1. Download the necessary software in the workstation
        + Android Device Firmware
           - Go to the website [https://samfrew.com](https://samfrew.com)
@@ -118,7 +118,7 @@ description: system memory acquisition, application memory acquisition, string a
        + Install *WhatsApp*
        + Log in with the *WhatApp* testing account *Test1*
 
-##### ● Acquire the system-memory contents
+● Acquire the system-memory contents
   1. Download the necessary files on *WSL2* in the workstation
        + Kernel for the main testing device
           - Go to the website [https://opensource.samsung.com](https://opensource.samsung.com)
@@ -178,7 +178,7 @@ su
 cd /sdcard
 insmod lime.ko “path=sysmem.lime format=lime”
 ```
-##### ● Acquire and analyze the application-memory contents
+● Acquire and analyze the application-memory contents
   1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
