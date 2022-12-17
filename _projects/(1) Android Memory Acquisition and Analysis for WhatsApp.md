@@ -128,110 +128,110 @@ description: system memory acquisition, application memory acquisition, string a
        + LiME
           - Download *LiME* inside *WSL2* by executing the command line *git clone https://github.com/504ensicsLabs/LiME.git*
   2. Install the necessary software inside *WSL2* by executing the following command lines
-```consol
-sudo apt-get install cmake
-sudo apt-get install build-essential
-sudo apt install llvm clang clang-tools
-sudo apt install binutils-aarch64-linux-gnu
-sudo apt install gcc-aarch64-linux-gnu
-```
+      ```consol
+      sudo apt-get install cmake
+      sudo apt-get install build-essential
+      sudo apt install llvm clang clang-tools
+      sudo apt install binutils-aarch64-linux-gnu
+      sudo apt install gcc-aarch64-linux-gnu
+      ```
   3. Build a kernel for the LiME module
        + Copy the file *Kernel.tar.gz* inside the unzipped kernel folder into *WSL2*
        + Uncompress *Kernel.tar.gz* by executing the following command line
-```consol
-tar -zxvf Kernel.tar.gz -C <Output Directory>
-```
+         ```consol
+         tar -zxvf Kernel.tar.gz -C <Output Directory>
+         ```
        + Move into the uncompressed folder
        + Modify the existing values in the file *Makefile* to the following values:
-```consol
-CROSS_COMPILE ?= aarch64-linux-gnu-
-CC = clang
-```
+         ```consol
+         CROSS_COMPILE ?= aarch64-linux-gnu-
+         CC = clang
+         ```
        + Modify the existing values in the file *build_kernel.sh* to the following values:
-```consol
-CROSS_COMPILE   ?= aarch64-linux-gnu-
-CC		= clang
-CLANG_TRIPLE	?= aarch64-linux-gnu-
-```
+         ```consol
+         CROSS_COMPILE   ?= aarch64-linux-gnu-
+         CC		= clang
+         CLANG_TRIPLE	?= aarch64-linux-gnu-
+         ```
        + Change *build_kernel.sh* to an executable by executing the following command line
-```consol
-chmod 744 build_kernel.sh
-```
+         ```consol
+         chmod 744 build_kernel.sh
+         ```
   1. Compile a *LiME* module
        + Modify the existing values in the file *Makefile* to the following values:
-```consol
-KDIR ?= $(HOME)/<Kernel_Directory>/out/
-CCPATH := aarch64-linux-gnu-
-default:	
-   $(MAKE) ARCH=arm64 CROSS_COMPILE=$(CCPATH) -C $(KDIR) M=$(PWD)
-```
+         ```consol
+         KDIR ?= $(HOME)/<Kernel_Directory>/out/
+         CCPATH := aarch64-linux-gnu-
+         default:	
+            $(MAKE) ARCH=arm64 CROSS_COMPILE=$(CCPATH) -C $(KDIR) M=$(PWD)
+         ```
        + Execute the command line *make*
   1. Copy the LiME module file *lime.ko* to *Tsurgi*
   2. Copy *lime.ko* to the main testing device by executing the following command line 
-```consol
-adb push < lime.ko Path> /sdcard/lime.ko
-```
+      ```consol
+      adb push < lime.ko Path> /sdcard/lime.ko
+      ```
   1. Acquire the system memory contents from the main testing device by executing the following command lines:
-```consol
-adb shell
-su
-cd /sdcard
-insmod lime.ko “path=sysmem.lime format=lime”
-```
+      ```consol
+      adb shell
+      su
+      cd /sdcard
+      insmod lime.ko “path=sysmem.lime format=lime”
+      ```
 
 ##### ● Acquire and analyze the application-memory contents
   1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
-```consol
-pip install frida-tools
-```
+            ```consol
+            pip install frida-tools
+            ```
        + fridump
           - Download *fridump*  inside *Tsurgi* by executing the following command line
-```consol
-git clone https://github.com/Nightbringer21/fridump.git
-```
+            ```consol
+            git clone https://github.com/Nightbringer21/fridump.git
+            ```
        + frida-server
           - Check the version of *Frida tools* by executing the following command line
-```consol
-frida-ps --version
-```
+            ```consol
+            frida-ps --version
+            ```
           - Go to the website [https://github.com/frida/frida/releases](https://github.com/frida/frida/releases)
           - Find the article with the same version as *Frida tools*
           - Click *Assets*
           - Download the file with *frida-server-Version-android-arm64.xz* as its name <br> (*Version* is the version of *Frida tools* in number)
   1. Uncompress *frida-server* by executing the following command line
-```consol
-unxz <frida-server file>
-```
+      ```consol
+      unxz <frida-server file>
+      ```
   2. Run the un-compressed *frida-server* on the main testing device
        + Copy *frida-server* to the main testing device by executing the following command line
-```consol
- adb push <frida-server file> /data/local/tmp*
- ```
+         ```consol
+         adb push <frida-server file> /data/local/tmp*
+         ```
        + Move into the directory */data/local/tmp* inside the main testing device by executing the following command lines
-```consol
-adb shell
-su
-cd /data/local/tmp
-```
+         ```consol
+         adb shell
+         su
+         cd /data/local/tmp
+         ```
        + Change the permissions of *frida-server* by executing the following command line
-```consol
-chmod 755 <frida-server file>
-```
+         ```consol
+         chmod 755 <frida-server file>
+         ```
        + Run *frida-server* by executing the following command line
-```consol
-./frida-server &
-```
+         ```consol
+         ./frida-server &
+         ```
        + Check if the associated process is correctly running by executing the following command line
-```consol
-ps -e \| grep -i frida-server
-```
+         ```consol
+         ps -e \| grep -i frida-server
+         ```
   3. Get back to *Tsurgi*
   4. Identify the name of the process associated with *WhatsApp* by executing the following command line
-```consol
-frida-ps -U
-```
+      ```consol
+      frida-ps -U
+      ```
   6. Acquire the application memory contents from the main testing device
        + Take one of the following actions
           - Open WhatsApp from the main testing device
@@ -241,9 +241,9 @@ frida-ps -U
           - Send a message to the main testing device from the secondary device
           - Read the message sent by the secondary device from the main testing device
        + Acquire the application memory contents by executing the following command line
-```consol
-python3 <fridump Directory>/fridump.py -U -s -o <Output Directory> <Application Name>
-```
+         ```consol
+         python3 <fridump Directory>/fridump.py -U -s -o <Output Directory> <Application Name>
+         ```
        + Repeat *Steps 6* until all the actions above are exhausted
 
 # <u> Analysis </u>
