@@ -179,7 +179,7 @@ cd /sdcard
 insmod lime.ko “path=sysmem.lime format=lime”
 ```
 ##### ● Acquire and analyze the application-memory contents
-  1. Download the necessary files on *Tsurgi*
+   1. Download the necessary files on *Tsurgi*
        + Frida tools
           - Download *Frida tools*  inside *Tsurgi* by executing the following command line
 ```consol
@@ -199,11 +199,11 @@ frida-ps --version
           - Find the article with the same version as *Frida tools*
           - Click *Assets*
           - Download the file with *frida-server-Version-android-arm64.xz* as its name <br> (*Version* is the version of *Frida tools* in number)
-  2. Uncompress *frida-server* by executing the following command line
+   2. Uncompress *frida-server* by executing the following command line
 ```consol
 unxz <frida-server file>
 ```
-  3. Run the un-compressed *frida-server* on the main testing device
+   3. Run the un-compressed *frida-server* on the main testing device
        + Copy *frida-server* to the main testing device by executing the following command line
 ```consol
  adb push <frida-server file> /data/local/tmp*
@@ -226,12 +226,12 @@ chmod 755 <frida-server file>
 ```consol
 ps -e \| grep -i frida-server
 ```
-  4. Get back to *Tsurgi*
-  5. Identify the name of the process associated with *WhatsApp* by executing the following command line
+   4. Get back to *Tsurgi*
+   5. Identify the name of the process associated with *WhatsApp* by executing the following command line
 ```consol
 frida-ps -U
 ```
-  6. Acquire the application memory contents from the main testing device
+   6. Acquire the application memory contents from the main testing device
        + Take one of the following actions
           - Open WhatsApp from the main testing device
           - Add another user associated the secondary device from the main testing device
