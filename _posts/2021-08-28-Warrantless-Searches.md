@@ -7,6 +7,7 @@ comments: false
 description: Consent, Emergency, Plain View, Decease, Border Crossing
 ---
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The followings are the cases where law enforcement (LE) can perform searches without warrants, but whether it is allowed to inspect the contents of a device is another consideration.
+
 * Consent
   : This is when an owner has given a permission.
   : Inspecting the contents of a device might be possible depending on given permissions.
@@ -29,11 +30,13 @@ description: Consent, Emergency, Plain View, Decease, Border Crossing
     : 2) Amount of time needed to obtain a warrant
     : 3) Degree of the possibility where evidence can be removed or destroyed
     : 4) Danger at the site
+
 * Plain View
   : This is when evidence is visible to LE.
   * Considerations
     : 1) This exception can be relied on only by LE.
     : 2) The clear visibility of evidence should be apparent.
+
 * Search Incident to Arrest (SIA)
   : This is a search performed when a person is arrested.
   * Requirements
@@ -42,6 +45,7 @@ description: Consent, Emergency, Plain View, Decease, Border Crossing
   * Scope of Search
     : 1) Arrested person
     : 2) The areas under the person's immediate control for weapons, means of escape, and evidence of a crime.
+
 * Inventory Search
   : This is the searches performed on impounded items by LE to record their physical contents
   : This exception is hard to be applied to inspect the contents of a device.
