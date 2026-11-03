@@ -1,0 +1,20 @@
+{% assign related_lang = page.lang | default: site.lang | default: 'ko' %}
+{% assign language_related_posts = site.related_posts | where: 'lang', related_lang | where_exp: 'entry', 'entry.url != page.url' %}
+{% assign related_limit = site.related_blog_posts.max_related | default: 5 %}
+{% if language_related_posts.size > 0 %}
+  <hr>
+  <section aria-labelledby="related-posts-heading">
+    {% if related_lang == 'ko' %}
+      <h2 id="related-posts-heading">함께 읽을 글</h2>
+      <p>이어서 읽어볼 만한 글입니다.</p>
+    {% else %}
+      <h2 id="related-posts-heading">Related posts</h2>
+      <p>Here are some more articles you might like to read:</p>
+    {% endif %}
+    <ul>
+      {% for entry in language_related_posts limit: related_limit %}
+        <li><a href="{{ entry.url | relative_url }}">{{ entry.title | escape }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

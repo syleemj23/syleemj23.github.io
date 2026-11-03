@@ -1,0 +1,65 @@
+---
+layout: default
+---
+{% assign post_lang = page.lang | default: site.lang | default: 'ko' %}
+{% assign year = page.date | date: '%Y' %}
+{% assign tags = page.tags | join: '' %}
+{% assign categories = page.categories | join: '' %}
+{% if page._styles %}
+  <style type="text/css">{{ page._styles }}</style>
+{% endif %}
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">
+      {% assign last_date = page.last_modified_at | default: page.last_updated %}
+      {% if post_lang == 'ko' %}
+        작성일: {{ page.date | date: '%Y년 %m월 %d일' }}
+        {% if page.author %} · 작성자: {{ page.author }}{% endif %}
+        {% if last_date %} · 수정일: {{ last_date | date: '%Y년 %m월 %d일' }}{% endif %}
+      {% else %}
+        Created on {{ page.date | date: '%B %d, %Y' }}
+        {% if page.author %} by {{ page.author }}{% endif %}
+        {% if last_date %}, last updated on {{ last_date | date: '%B %d, %Y' }}{% endif %}
+      {% endif %}
+      {% if page.meta %} · {{ page.meta }}{% endif %}
+    </p>
+    <p class="post-tags">
+      <span><i class="fa-solid fa-calendar fa-sm"></i> {{ year }}</span>
+      {% if tags != '' %}
+        &nbsp; &middot; &nbsp;
+        {% for tag in page.tags %}
+          <span><i class="fa-solid fa-hashtag fa-sm"></i> {{ tag | escape }}</span>
+          {% unless forloop.last %}&nbsp;{% endunless %}
+        {% endfor %}
+      {% endif %}
+      {% if categories != '' %}
+        &nbsp; &middot; &nbsp;
+        {% for category in page.categories %}
+          <span><i class="fa-solid fa-tag fa-sm"></i> {{ category | escape }}</span>
+          {% unless forloop.last %}&nbsp;{% endunless %}
+        {% endfor %}
+      {% endif %}
+    </p>
+  </header>
+  <article class="post-content">
+    {% if page.toc and page.toc.beginning %}
+      <div id="table-of-contents">{% toc %}</div>
+      <hr>
+    {% endif %}
+    <div id="markdown-content">{{ content }}</div>
+  </article>
+  {% if page.citation %}{% include citation.liquid %}{% endif %}
+  {% if page.related_publications %}
+    <h2>{% if post_lang == 'ko' %}참고 문헌{% else %}References{% endif %}</h2>
+    <div class="publications">{% bibliography --group_by none --cited_in_order %}</div>
+  {% endif %}
+  {% if site.related_blog_posts and site.related_blog_posts.enabled %}
+    {% if page.related_posts == null or page.related_posts %}
+      {% include related_posts.liquid %}
+    {% endif %}
+  {% endif %}
+  {% if site.plugins contains 'al_comments' %}
+    {% include plugins/al_comments.liquid %}
+  {% endif %}
+</div>

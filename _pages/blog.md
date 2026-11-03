@@ -1,19 +1,13 @@
 ---
 layout: default
 permalink: /blog/
-title: blog
+title: 지식창고
+lang: ko
+translation_url: /en/blog/
 nav: true
-nav_order: 1
+nav_order: 2
 pagination:
-  enabled: true
-  collection: posts
-  permalink: /page/:num/
-  per_page: 5
-  sort_field: date
-  sort_reverse: true
-  trail:
-    before: 1 # The number of links before the current page
-    after: 3 # The number of links after the current page
+  enabled: false
 ---
 
 <div class="post">
@@ -29,34 +23,8 @@ pagination:
   </div>
   {% endif %}
 
-{% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
-
-  <div class="tag-category-list">
-    <ul class="p-0 m-0">
-      {% for tag in site.display_tags %}
-        <li>
-          <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>
-        </li>
-        {% unless forloop.last %}
-          <p>&bull;</p>
-        {% endunless %}
-      {% endfor %}
-      {% if site.display_categories.size > 0 and site.display_tags.size > 0 %}
-        <p>&bull;</p>
-      {% endif %}
-      {% for category in site.display_categories %}
-        <li>
-          <i class="fa-solid fa-tag fa-sm"></i> <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">{{ category }}</a>
-        </li>
-        {% unless forloop.last %}
-          <p>&bull;</p>
-        {% endunless %}
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-{% assign featured_posts = site.posts | where: "featured", "true" %}
+{% assign korean_posts = site.posts | where: "lang", "ko" | sort: "date" | reverse %}
+{% assign featured_posts = korean_posts | where: "featured", true %}
 {% if featured_posts.size > 0 %}
 <br>
 
@@ -73,7 +41,7 @@ pagination:
 <div class="float-right">
 <i class="fa-solid fa-thumbtack fa-xs"></i>
 </div>
-<h3 class="card-title text-lowercase">{{ post.title }}</h3>
+<h3 class="card-title ">{{ post.title }}</h3>
 <p class="card-text">{{ post.description }}</p>
 
                     {% if post.external_source == blank %}
@@ -84,9 +52,9 @@ pagination:
                     {% assign year = post.date | date: "%Y" %}
 
                     <p class="post-meta">
-                      {{ read_time }} min read &nbsp; &middot; &nbsp;
-                      <a href="{{ year | prepend: '/blog/' | relative_url }}">
-                        <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </a>
+                      읽는 데 약 {{ read_time }}분 &nbsp; &middot; &nbsp;
+                      <span>
+                        <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </span>
                     </p>
                   </div>
                 </div>
@@ -101,13 +69,13 @@ pagination:
 
 {% endif %}
 
+  {% if korean_posts.size == 0 %}
+    <p>아직 등록된 한국어 학습 글이 없습니다.</p>
+  {% endif %}
+
   <ul class="post-list">
 
-    {% if page.pagination.enabled %}
-      {% assign postlist = paginator.posts %}
-    {% else %}
-      {% assign postlist = site.posts %}
-    {% endif %}
+    {% assign postlist = korean_posts %}
 
     {% for post in postlist %}
 
@@ -131,7 +99,7 @@ pagination:
         {% if post.redirect == blank %}
           <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
         {% elsif post.redirect contains '://' %}
-          <a class="post-title" href="{{ post.redirect }}" target="_blank">{{ post.title }}</a>
+          <a class="post-title" href="{{ post.redirect }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
           <svg width="2rem" height="2rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
             <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
@@ -141,21 +109,21 @@ pagination:
       </h3>
       <p>{{ post.description }}</p>
       <p class="post-meta">
-        {{ read_time }} min read &nbsp; &middot; &nbsp;
-        {{ post.date | date: '%B %d, %Y' }}
+        읽는 데 약 {{ read_time }}분 &nbsp; &middot; &nbsp;
+        {{ post.date | date: '%Y년 %m월 %d일' }}
         {% if post.external_source %}
         &nbsp; &middot; &nbsp; {{ post.external_source }}
         {% endif %}
       </p>
       <p class="post-tags">
-        <a href="{{ year | prepend: '/blog/' | relative_url }}">
-          <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </a>
+        <span>
+          <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </span>
 
           {% if tags != "" %}
           &nbsp; &middot; &nbsp;
             {% for tag in post.tags %}
-            <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
-              <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}</a>
+            <span>
+              <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}</span>
               {% unless forloop.last %}
                 &nbsp;
               {% endunless %}
@@ -165,8 +133,8 @@ pagination:
           {% if categories != "" %}
           &nbsp; &middot; &nbsp;
             {% for category in post.categories %}
-            <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
-              <i class="fa-solid fa-tag fa-sm"></i> {{ category }}</a>
+            <span>
+              <i class="fa-solid fa-tag fa-sm"></i> {{ category }}</span>
               {% unless forloop.last %}
                 &nbsp;
               {% endunless %}
@@ -189,8 +157,7 @@ pagination:
 
   </ul>
 
-{% if page.pagination.enabled %}
-{% include pagination.liquid %}
-{% endif %}
+
 
 </div>
+
