@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Types of Digital Evidence
+title: Digital Evidence Classification depending on Perspectives
 date: 2021-08-28 00:00:00
 description: Exculpatory vs. Inculpatory <br /> Class vs. Individual
 categories: ["DF Knowledge"]

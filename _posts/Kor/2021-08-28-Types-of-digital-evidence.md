@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 디지털증거의 종류
+title: 관점에 따른 디지털증거의 분류
 date: 2021-08-28 00:00:00
 description: 무죄증거 vs. 유죄증거 <br /> 범주적증거 vs. 특징적증거
 categories: ["DF 지식"]
