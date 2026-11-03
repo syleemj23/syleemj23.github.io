@@ -5,8 +5,8 @@ date: 2021-08-28 00:00:00
 description: Exculpatory vs. Inculpatory <br /> Class vs. Individual
 categories: ["DF Knowledge"]
 lang: en
-permalink: /en/blog/locards-exchange-principle/
-translation_url: /blog/locards-exchange-principle/
+permalink: /en/blog/digital-evidence-type/
+translation_url: /blog/digital-evidence-type/
 ---
 * **Evidence in relation to Suspects**
   * Exculpatory Evidence

@@ -5,8 +5,8 @@ date: 2021-08-28 00:00:00
 description: 면책증거 vs. 유죄증거 <br /> 범주적증거 vs. 특징적증거
 categories: ["DF 지식"]
 lang: ko
-permalink: /blog/locards-exchange-principle/
-translation_url: /en/blog/locards-exchange-principle/
+permalink: /blog/digital-evidence-type/
+translation_url: /en/blog/digital-evidence-type/
 ---
 * **피의자와 관련하여 보는 증거**
   * 면책증거
