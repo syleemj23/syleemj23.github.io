@@ -1,0 +1,331 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Android Memory Acquisition and Analysis for WhatsApp | SAM </title> <meta name="author" content="SAM "> <meta name="description" content="system memory acquisition, application memory acquisition, string analysis."> <meta name="keywords" content=""> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://syleemj23.github.io/en/projects/whatsapp-memory/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <style>
+  #navbar .nav-tools-start {
+    margin-inline-start: 1rem;
+    padding-inline-start: 1rem;
+    border-inline-start: 1px solid rgba(128, 128, 128, 0.28);
+    align-self: center;
+  }
+  #navbar .language-menu + .toggle-container {
+    margin-inline-start: 0.5rem;
+  }
+  @media (max-width: 575.98px) {
+    #navbar .nav-tools-start {
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+      border-inline-start: 0;
+      align-self: flex-start;
+    }
+  }
+  #navbar .language-menu {
+    margin-inline-start: 0.5rem;
+    padding-inline-start: 0;
+    border-inline-start: 0;
+    align-self: center;
+  }
+  #navbar .language-menu > .language-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.08);
+    color: var(--global-text-color, inherit);
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  #navbar .language-selector:hover,
+  #navbar .language-selector[aria-expanded="true"] {
+    background: rgba(128, 128, 128, 0.18);
+    border-color: currentColor;
+  }
+  #navbar .language-selector:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  #navbar .language-selector svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+  #navbar .language-menu > .dropdown-menu {
+    min-width: 9rem;
+    margin-top: 0.5rem;
+    padding: 0.35rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+  #navbar .language-menu .dropdown-item {
+    border-radius: 0.4rem;
+  }
+  @media (max-width: 575.98px) {
+    #navbar .language-menu {
+      align-self: flex-start;
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+      border-inline-start: 0;
+      margin-block: 0.5rem;
+    }
+  }
+</style> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/en/"> <span class="font-weight-bold">SAM</span> </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/en/">About</a> </li> <li class="nav-item active"> <a class="nav-link" href="/en/projects/" aria-current="page">Projects</a> </li> <li class="nav-item "> <a class="nav-link" href="/en/blog/">Notes</a> </li> <li class="nav-item nav-tools-start"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="nav-item dropdown language-menu"> <a class="nav-link dropdown-toggle language-selector" href="#" id="languageDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-controls="languageDropdownMenu" aria-expanded="false" aria-label="Select language"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"> <circle cx="12" cy="12" r="9"></circle> <ellipse cx="12" cy="12" rx="4" ry="9"></ellipse> <path d="M3 12h18M5 7h14M5 17h14"></path> </svg> <span>English</span> </a> <div class="dropdown-menu dropdown-menu-right" id="languageDropdownMenu" aria-labelledby="languageDropdown"> <a class="dropdown-item " href="/projects/whatsapp-memory/" lang="ko" hreflang="ko">한국어</a> <a class="dropdown-item active" href="/en/projects/whatsapp-memory/" lang="en" hreflang="en" aria-current="page">English</a> </div> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <style type="text/css">
+    .post article {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.post article img,
+.post article video,
+.post article svg {
+  max-width: 100%;
+  height: auto;
+}
+.post article figure,
+.post article .highlight,
+.post article .highlighter-rouge {
+  min-width: 0;
+  max-width: 100%;
+}
+.post article pre,
+.post article pre code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.post article table {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+}
+.post article th,
+.post article td {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+  </style> <div class="post"> <header class="post-header"> <h1 class="post-title">Android Memory Acquisition and Analysis for WhatsApp</h1> <p class="post-description">system memory acquisition, application memory acquisition, string analysis.</p> </header> <article> <h1 id="-executive-summary-"><u> Executive Summary </u></h1> <p>     Memory acquisition with WhatsApp on an Android device has been attempted for both the system memory and the application memory. Though the system memory acquisition has failed, the application memory acquisition still has provided many digital artifacts that possibly indicate to the user’s certain activities with WhatsApp. Such activities include whether a user has:</p> <ul> <li>Added another new user</li> <li>Sent a message</li> <li>Read a message sent by another user in the same chatroom</li> </ul> <h1 id="-introduction-"><u> Introduction </u></h1> <p>     Throughout this blog post, both 2 methods of acquiring memory contents from an Android device for an application named WhatsApp, and the analysis of the acquired memory contents will be explored. By the methods, 2 different types of memory contents are acquired, one memory content from the memory space of a system and the other from the memory space of an application running on the system. Though both methods have been attempted for memory acquisition, only the application memory contents have been analyzed due to the failure of acquiring the system memory contents. However, the steps taken for both attempted methods will be provided in the following section named Procedure. The application memory contents have been analyzed mainly based on strings.</p> <h1 id="-tools-"><u> Tools </u></h1> <p>     The following table shows the tools used for the current project.</p> <table> <thead> <tr> <th style="text-align: center">Tool</th> <th style="text-align: center">Type</th> <th style="text-align: left"><center>Version</center></th> <th style="text-align: left"><center>Purpose</center></th> </tr> </thead> <tbody> <tr> <td style="text-align: center">Samsung Galaxy Tab A7 Lite <br> (SM-T220)</td> <td style="text-align: center">Hardware</td> <td style="text-align: left">[OS]Android 12 <br> [Kernel]T220XXU1BVGB</td> <td style="text-align: left">(Device A) <br> To be used as a main testing device</td> </tr> <tr> <td style="text-align: center">Samsung Galaxy Z Flip 4 <br> (SM-F721U1)</td> <td style="text-align: center">Hardware</td> <td style="text-align: left">[OS]Android 12 <br> [Kernel]F721U1UES1AVJ7</td> <td style="text-align: left">(Device B) <br> To be used as a secondary device that communicates with the in testing device</td> </tr> <tr> <td style="text-align: center">Samsung Galaxy Book Pro 360 <br> (NP950QDB-KB1US)</td> <td style="text-align: center">Hardware</td> <td style="text-align: left">[OS]Windows 10 <br> [Build]19045.2251</td> <td style="text-align: left">To be used as a workstation</td> </tr> <tr> <td style="text-align: center">SM-T220 Firmware</td> <td style="text-align: center">Software</td> <td style="text-align: left">T220XXU1BVGB</td> <td style="text-align: left">To be used as the base binary for a rooted custom binary</td> </tr> <tr> <td style="text-align: center">Magisk</td> <td style="text-align: center">Software</td> <td style="text-align: left">25.2</td> <td style="text-align: left">To create a rooted custom binary</td> </tr> <tr> <td style="text-align: center">Odin3</td> <td style="text-align: center">Software</td> <td style="text-align: left">3.14.4</td> <td style="text-align: left">To install the custom recovery onto the testing device for rooting</td> </tr> <tr> <td style="text-align: center">WSL2</td> <td style="text-align: center">Software</td> <td style="text-align: left">Ubuntu 20.04</td> <td style="text-align: left">To build a kernel for a LiME module for the main testing device</td> </tr> <tr> <td style="text-align: center">SM-T220 Kernel</td> <td style="text-align: center">Software</td> <td style="text-align: left">T220XXU1BVGB</td> <td style="text-align: left">To build a kernel for a LiME module for the main testing device</td> </tr> <tr> <td style="text-align: center">Lime</td> <td style="text-align: center">Software</td> <td style="text-align: left">1.9.1</td> <td style="text-align: left">To build a kernel for a LiME module for the main testing device</td> </tr> <tr> <td style="text-align: center">Vmware Workstation 16 Pro</td> <td style="text-align: center">Software</td> <td style="text-align: left">16.2.4</td> <td style="text-align: left">To use Tsurgi</td> </tr> <tr> <td style="text-align: center">Tsurgi</td> <td style="text-align: center">Software</td> <td style="text-align: left">5.4.2-050402</td> <td style="text-align: left">To acquire both the system memory contents and the application memory contents from the main testing device</td> </tr> <tr> <td style="text-align: center">Frida tools</td> <td style="text-align: center">Software</td> <td style="text-align: left">15.2.2</td> <td style="text-align: left">To acquire the application memory contents</td> </tr> <tr> <td style="text-align: center">fridump</td> <td style="text-align: center">Software</td> <td style="text-align: left">0.1</td> <td style="text-align: left">To acquire the application memory contents</td> </tr> <tr> <td style="text-align: center">frida-server</td> <td style="text-align: center">Software</td> <td style="text-align: left">15.2.2</td> <td style="text-align: left">To acquire the application memory contents</td> </tr> <tr> <td style="text-align: center">Visual Studio Code</td> <td style="text-align: center">Software</td> <td style="text-align: left">1.73.1</td> <td style="text-align: left">To both create a program and analyze the strings in the application memory contents</td> </tr> </tbody> </table> <h1 id="-overall-procedure-"><u> Overall Procedure </u></h1> <h5 id="-prepare-for-memory-acquisition">● Prepare for Memory Acquisition</h5> <ol> <li>Download the necessary software in the workstation <ul> <li>Android Device Firmware <ul> <li>Go to the website <a href="https://samfrew.com" rel="external nofollow noopener" target="_blank">https://samfrew.com</a> </li> <li>Enter <em>sm-t220</em> in the space for <em>Model</em> </li> <li>Enter <em>United States</em> in the space for <em>Region</em> </li> <li>Click the button <em>OK</em> </li> <li>Select and download the firmware with version <em>T220XXU1BVGB</em> </li> </ul> </li> <li>Magisk <ul> <li>Download magisk from GitHub <a href="https://github.com/topjohnwu/Magisk/releases" rel="external nofollow noopener" target="_blank">https://github.com/topjohnwu/Magisk/releases</a> </li> </ul> </li> <li>Odin <ul> <li>Download Odin from the website <a href="https://www.osamsung.com/odin/Odin3-v3.14.4.zip?check=odin3.14.4" rel="external nofollow noopener" target="_blank">https://www.osamsung.com/odin/Odin3-v3.14.4.zip?check=odin3.14.4</a> </li> </ul> </li> </ul> </li> <li>Prepare the main testing device for rooting <ul> <li>Enable Developer options <ul> <li>Go to <em>Settings</em> </li> <li>Select the menu <em>About tablet</em> </li> <li>Select the menu <em>Software information</em> </li> <li>Tap <em>Build number</em> 7 times to activate the menu <em>Developer options</em> under About tablet</li> </ul> </li> <li>Enable OEM unlocking <ul> <li>Go to <em>Developer options</em> </li> <li>Enable the menu <em>OEM unlocking</em> </li> </ul> </li> <li>Unlock bootloader <ul> <li>Turn off the main testing device</li> <li>Connect the main testing device to the workstation</li> <li>Press and hold the 2 buttons <em>UP</em> and <em>Down</em> until the screen becomes on</li> <li>Press the button <em>Up</em> until the screen changes to the mode <em>Bootloader unlock</em> </li> <li>Press the button <em>Up</em> again</li> </ul> </li> </ul> </li> <li>Root the main testing device <ul> <li>Prepare a rooted custom binary <ul> <li>Copy bo the downloaded file <em>Magisk</em> and the <em>AP</em> file inside the firmware folder to the main testing device</li> <li>Install <em>Magisk</em> on the main testing device</li> <li>Execute the installed program <em>Magisk</em> </li> <li>Select the menu <em>Install</em> </li> <li>Click the menu <em>Select and Patch a File</em> </li> <li>Select the copied file <em>AP</em> </li> <li>Click the menu <em>LET’S GO</em> </li> <li>Copy the Tar file starting with <em>magisk_patched</em> as its name to the workstation</li> </ul> </li> <li>Boot the main testing device in the mode <em>ODIN</em> <ul> <li>Turn off the main testing device</li> <li>Connect the main testing device to the workstation</li> <li>Press and hold the 2 buttons <em>Up</em> and <em>Down</em> until the screen becomes on</li> <li>Press the button <em>Up</em> </li> </ul> </li> <li>Install the rooted custom binary on the main testing device with Odin <ul> <li>Execute the downloaded file <em>Odin</em> </li> <li>Click the button <em>BL</em> and select the file inside the firmware folder that starts with <em>BL_</em> as its name</li> <li>Click the button <em>AP</em> and select the file copied from the main testing device that starts with <em>magisk_patched</em> as its name</li> <li>Click the button <em>CSC</em> and select the file inside the firmware folder that starts with <em>CSC_</em> as its name</li> <li>Click the button <em>Start</em> </li> <li>Disconnect the main testing device from the workstation once the message <em>PASS</em> appears on <em>Odin</em> </li> </ul> </li> <li>Factory-reset the main testing device <ul> <li>Hold the 2 buttons <em>Down</em> and <em>Power</em> until the screen goes dark</li> <li>Change the button <em>Down</em> to the button <em>Up</em> while holding the button <em>Power</em> </li> <li>Release both buttons once the message <em>PRESS POWER KEY TO CONTINUE</em> appears</li> <li>Select the menu <em>Wipe data/factory reset</em> </li> <li>Select the menu <em>Reboot system now</em> </li> </ul> </li> <li>Connect the main testing device to the workstation</li> <li>Re-install <em>Magisk</em> on the main testing device <ul> <li>Copy <em>Magisk</em> to the main testing device</li> <li>Install <em>Magisk</em> </li> <li>Click the button <em>OK</em> when the message <em>Require Additional Setup</em> appears <br> (This step will reboot the main testing device)</li> </ul> </li> </ul> </li> <li>Adjust the settings of the main testing device <ul> <li>Turn off <em>Wi-Fi</em> </li> <li>Disable <em>Auto-update Google apps</em> </li> <li>Disable <em>Auto download over Wi-fi</em> <ul> <li>Go to <em>Settings</em> </li> <li>Select the menu <em>Software update</em> </li> <li>Un-check the menu <em>Auto download over Wi-fi</em> </li> </ul> </li> <li>Repeat <em>Step 2-1</em> to enable <em>Developer options</em> </li> <li>Adjust the settings under <em>Developer options</em> <ul> <li>Go to <em>Developer options</em> </li> <li>Enable <em>Stay awake</em> </li> <li>Disable <em>Auto update system</em> </li> <li>Enable <em>USB debugging</em> </li> <li>Disable <em>Verify apps over USB</em> </li> <li>Disable <em>Verify bytecode of debuggable apps</em> </li> </ul> </li> <li>Turn on <em>Wi-Fi</em> </li> <li>Install <em>WhatsApp</em> </li> <li>Log in with the <em>WhatApp</em> testing account <em>Test1</em> </li> </ul> </li> </ol> <h5 id="-acquire-the-system-memory-contents">● Acquire the system-memory contents</h5> <ol> <li>Download the necessary files on <em>WSL2</em> in the workstation <ul> <li>Kernel for the main testing device <ul> <li>Go to the website <a href="https://opensource.samsung.com" rel="external nofollow noopener" target="_blank">https://opensource.samsung.com</a> </li> <li>Search for <em>sm-t220</em> </li> <li>Download the kernel file with version <em>T220XXU1BVGB</em> </li> <li>Unzip the downloaded kernel file</li> </ul> </li> <li>LiME <ul> <li>Download <em>LiME</em> inside <em>WSL2</em> by executing the command line <em>git clone https://github.com/504ensicsLabs/LiME.git</em> </li> </ul> </li> </ul> </li> <li>Install the necessary software inside <em>WSL2</em> by executing the following command lines <pre><code class="language-consol"> sudo apt-get install cmake
+ sudo apt-get install build-essential
+ sudo apt install llvm clang clang-tools
+ sudo apt install binutils-aarch64-linux-gnu
+ sudo apt install gcc-aarch64-linux-gnu
+</code></pre> </li> <li>Build a kernel for the LiME module <ul> <li>Copy the file <em>Kernel.tar.gz</em> inside the unzipped kernel folder into <em>WSL2</em> </li> <li>Uncompress <em>Kernel.tar.gz</em> by executing the following command line <pre><code class="language-consol">tar -zxvf Kernel.tar.gz -C &lt;Output Directory&gt;
+</code></pre> </li> <li>Move into the uncompressed folder</li> <li>Modify the existing values in the file <em>Makefile</em> to the following values: <pre><code class="language-consol">CROSS_COMPILE ?= aarch64-linux-gnu-
+CC = clang
+</code></pre> </li> <li>Modify the existing values in the file <em>build_kernel.sh</em> to the following values: <pre><code class="language-consol">CROSS_COMPILE   ?= aarch64-linux-gnu-
+CC		= clang
+CLANG_TRIPLE	?= aarch64-linux-gnu-
+</code></pre> </li> <li>Change <em>build_kernel.sh</em> to an executable by executing the following command line <pre><code class="language-consol">chmod 744 build_kernel.sh
+</code></pre> </li> </ul> </li> <li>Compile a <em>LiME</em> module <ul> <li>Modify the existing values in the file <em>Makefile</em> to the following values: <pre><code class="language-consol">KDIR ?= $(HOME)/&lt;Kernel_Directory&gt;/out/
+CCPATH := aarch64-linux-gnu-
+default:	
+   $(MAKE) ARCH=arm64 CROSS_COMPILE=$(CCPATH) -C $(KDIR) M=$(PWD)
+</code></pre> </li> <li>Execute the command line <em>make</em> </li> </ul> </li> <li>Copy the LiME module file <em>lime.ko</em> to <em>Tsurgi</em> </li> <li>Copy <em>lime.ko</em> to the main testing device by executing the following command line <pre><code class="language-consol"> adb push &lt;lime.ko Path&gt; /sdcard/lime.ko
+</code></pre> </li> <li>Acquire the system memory contents from the main testing device by executing the following command lines: <pre><code class="language-consol"> adb shell
+ su
+ cd /sdcard
+ insmod lime.ko “path=sysmem.lime format=lime”
+</code></pre> </li> </ol> <h5 id="-acquire-and-analyze-the-application-memory-contents">● Acquire and analyze the application-memory contents</h5> <ol> <li>Download the necessary files on <em>Tsurgi</em> <ul> <li>Frida tools <ul> <li>Download <em>Frida tools</em> inside <em>Tsurgi</em> by executing the following command line <pre><code class="language-consol">pip install frida-tools
+</code></pre> </li> </ul> </li> <li>fridump <ul> <li>Download <em>fridump</em> inside <em>Tsurgi</em> by executing the following command line <pre><code class="language-consol">git clone https://github.com/Nightbringer21/fridump.git
+</code></pre> </li> </ul> </li> <li>frida-server <ul> <li>Check the version of <em>Frida tools</em> by executing the following command line <pre><code class="language-consol">frida-ps --version
+</code></pre> </li> <li>Go to the website <a href="https://github.com/frida/frida/releases" rel="external nofollow noopener" target="_blank">https://github.com/frida/frida/releases</a> </li> <li>Find the article with the same version as <em>Frida tools</em> </li> <li>Click <em>Assets</em> </li> <li>Download the file with <em>frida-server-Version-android-arm64.xz</em> as its name <br> (<em>Version</em> is the version of <em>Frida tools</em> in number)</li> </ul> </li> </ul> </li> <li>Uncompress <em>frida-server</em> by executing the following command line <pre><code class="language-consol"> unxz &lt;frida-server file&gt;
+</code></pre> </li> <li>Run the un-compressed <em>frida-server</em> on the main testing device <ul> <li>Copy <em>frida-server</em> to the main testing device by executing the following command line <pre><code class="language-consol">adb push &lt;frida-server file&gt; /data/local/tmp
+</code></pre> </li> <li>Move into the directory <em>/data/local/tmp</em> inside the main testing device by executing the following command lines <pre><code class="language-consol">adb shell
+su
+cd /data/local/tmp
+</code></pre> </li> <li>Change the permissions of <em>frida-server</em> by executing the following command line <pre><code class="language-consol">chmod 755 &lt;frida-server file&gt;
+</code></pre> </li> <li>Run <em>frida-server</em> by executing the following command line <pre><code class="language-consol">./frida-server &amp;
+</code></pre> </li> <li>Check if the associated process is correctly running by executing the following command line <pre><code class="language-consol">ps -e | grep -i frida-server
+</code></pre> </li> </ul> </li> <li>Get back to <em>Tsurgi</em> </li> <li>Identify the name of the process associated with <em>WhatsApp</em> by executing the following command line <pre><code class="language-consol"> frida-ps -U
+</code></pre> </li> <li>Acquire the application memory contents from the main testing device <ul> <li>Take one of the following actions <ul> <li>Open WhatsApp from the main testing device</li> <li>Add another user associated the secondary device from the main testing device</li> <li>Send a message to the secondary device from from the main testing device</li> <li>Read the message sent from the secondary device</li> <li>Send a message to the main testing device from the secondary device</li> <li>Read the message sent by the secondary device from the main testing device</li> </ul> </li> <li>Acquire the application memory contents by executing the following command line <pre><code class="language-consol">python3 &lt;fridump Directory&gt;/fridump.py -U -s -o &lt;Output Directory&gt; &lt;Application Name&gt;
+</code></pre> </li> <li>Repeat <em>Step 6</em> until all the actions above are exhausted</li> </ul> </li> </ol> <h1 id="-analysis-"><u> Analysis </u></h1> <p>     The analysis of the application memory contents for WhatsApp has been performed on the strings stored in the memory contents. Especially, the strings that possibly indicate each of the last 5 actions in the list of 6 actions above have been looked for. As explained in the too table above, Device A is the main testing device while Device B is the secondary device that communicates with the main testing device. The screenshot below shows WhatsApp on Device A after all the 6 actions in the list have been taken.</p> <p><img src="/assets/img/Projects/1/WhatsApp.jpg" width="400" height="670"></p> <h5 id="-from-the-memory-contents-after-the-user-on-device-a-adds-the-user-on-device-b">● From the memory contents after the user on Device A adds the user on Device B</h5> <p>     As might be expected, the phone numbers of both users have been discovered. In addition, Test2, the WhatsApp name of the user on Device B, has been found as well. These digital artifacts exist in various forms of strings and could be used in identifying if a WhatsApp user has registered another specific user. The 1st following screenshot shows both the WhatsApp name and the phone number of the user on Device B. The phone number is redacted for privacy purposes.</p> <p><img src="/assets/img/Projects/1/Picture1.png" alt=""></p> <h5 id="-from-the-memory-contents-after-the-user-on-device-a-send-a-message-to-the-user-on-device-b">● From the memory contents after the user on Device A send a message to the user on Device B</h5> <p>     As might be expected, the contents of a message sent to the user on Device B have been discovered. This digital artifact could be used in identifying the messages sent to a specific user. The following screenshot shows both the contents of a message sent to the user on Device B and the phone number of the user. The phone number is redacted for privacy purposes.</p> <p><img src="/assets/img/Projects/1/Picture2.png" alt=""></p> <h5 id="-from-the-memory-contents-after-the-user-on-device-b-read-the-message-from-the-user-on-device-a">● From the memory contents after the user on Device B read the message from the user on Device A.</h5> <p>     Interestingly, a string seemingly associated with the thread activity of WhatsApp has been discovered. The string includes, as its sub-string, read-receipt-received that might indicate that the user on Device B has read the message. This digital artifact could be used in identifying if the other user of a conversation with the user of a device has read a message sent by the device user. In addition, the string of this digital artifact also contains a part of the phone number of the user on Device B as its sub-string. The following screenshot shows this digital artifact, and the partial phone number is redacted for privacy purposes.</p> <p><img src="/assets/img/Projects/1/Picture3.png" alt=""></p> <h5 id="-from-the-memory-contents-after-the-user-on-device-b-send-another-message-to-the-user-on-device-a">● From the memory contents after the user on Device B send another message to the user on Device A.</h5> <p>     Though the user on Device A has not read a message sent by the user on Device B, the contents of the message have been found, together with the phone number of the user on Device B. In addition, both the string “Message from Test2” and the string “1 new message” also have been discovered. These digital artifacts might be collectively used in identifying if the user on a device has any message not read. The 1st screenshot shows both the contents of a message sent by the user on Device B and the user’s phone number. The 2nd screenshot shows both the strings “Message from Test2” and “1 new message”. The phone number is redacted for privacy purposes.</p> <p><img src="/assets/img/Projects/1/Picture4.png" alt=""> <img src="/assets/img/Projects/1/Picture5.png" alt=""></p> <h5 id="-from-the-memory-contents-after-the-user-on-device-a-read-the-message-from-the-user-on-device-b">● From the memory contents after the user on Device A read the message from the user on Device B</h5> <p>     Likewise with the memory contents after the user on Device B read the message from the user on Device A, a string seemingly associated with the thread activity of WhatsApp has been discovered. Instead of read-receipt-received, messages-read has been discovered, as a sub-string along with the partial phone number of the user on Device B, which might indicate that the user on Device A has read a message sent by the user on Device B. In addition, a string seemingly associated with database-update activities also has been found that might indicate that the user on Device on B is notified of the sent message having been read by the user on Device A. These digital artifacts might be collectively used in identifying if the user on a device has read a certain message. The 1st screenshot shows the thread-associated while the 2nd screenshot shows string the database-associated string.</p> <p><img src="/assets/img/Projects/1/Picture6.png" alt=""> <img src="/assets/img/Projects/1/Picture7.png" alt=""></p> <h1 id="-conclusion-"><u> Conclusion </u></h1> <p>     It was not an easy task to acquire the memory contents from an Android device, and I could not acquire the system memory contents. At this point, I am not sure if the cause of the failed acquisition is associated with a higher version of Android. The identification of this will be continued. However, even the application memory contents have left a variety of information and future tasks. For instance, digital artifacts associated with thread activities exist that seemingly indicate if the user on a device has read a message sent by the other users in a chatroom. On the other hand, it could be future work to verify the indication of the digital artifacts with other types of digital artifacts. Such digital artifacts could be the examination of strings seemingly associated with database activities. As mentioned above, such a database-associated string has been found that could indicate that a user in a chatroom is notified of a message sent by him or her having been read by the intended recipient. In addition to this string, many database-associated strings have been discovered, so their further analysis could help verify the possible indication from the thread-associated string that the user of a device has read a specific message.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 SAM . Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-소개",
+    title: "소개",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-프로젝트",
+          title: "프로젝트",
+          description: "디지털포렌식 프로젝트의 목표, 진행 과정과 결과를 정리합니다.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-지식창고",
+          title: "지식창고",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "post-디지털증거의-종류",
+        
+          title: "디지털증거의 종류",
+        
+        description: "면책증거 vs. 유죄증거  범주적증거 vs. 특징적증거",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/locards-exchange-principle/";
+          
+        },
+      },{id: "post-로카르의-교환법칙",
+        
+          title: "로카르의 교환법칙",
+        
+        description: "Physical Traces, Digital Traces",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/locards-exchange-principle/";
+          
+        },
+      },{id: "post-types-of-digital-evidence",
+        
+          title: "Types of Digital Evidence",
+        
+        description: "Exculpatory vs. Inculpatory  Class vs. Individual",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/en/blog/locards-exchange-principle/";
+          
+        },
+      },{id: "post-locard-s-exchange-principle",
+        
+          title: "Locard’s Exchange Principle",
+        
+        description: "Physical Traces, Digital Traces",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/en/blog/locards-exchange-principle/";
+          
+        },
+      },{id: "books-the-godfather",
+          title: 'The Godfather',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the_godfather/";
+            },},{id: "news-a-simple-inline-announcement",
+          title: 'A simple inline announcement.',
+          description: "",
+          section: "News",},{id: "news-a-long-announcement-with-details",
+          title: 'A long announcement with details',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_2/";
+            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
+          title: 'A simple inline announcement with Markdown emoji! <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20"> <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">',
+          description: "",
+          section: "News",},{id: "projects-android-memory-acquisition-and-analysis-for-whatsapp",
+          title: 'Android Memory Acquisition and Analysis for WhatsApp',
+          description: "system memory acquisition, application memory acquisition, string analysis.",
+          section: "Projects",handler: () => {
+              window.location.href = "/en/projects/whatsapp-memory/";
+            },},{id: "projects-안드로이드-whatsapp-메모리-이미지-획득-및-분석",
+          title: '안드로이드 WhatsApp 메모리 이미지 획득 및 분석',
+          description: "안드로이드 시스템 메모리 이미지 획득, 어플리케이션 메모리 획득, 문자열 분석.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/whatsapp-memory/";
+            },},{id: "teachings-data-science-fundamentals",
+          title: 'Data Science Fundamentals',
+          description: "This course covers the foundational aspects of data science, including data collection, cleaning, analysis, and visualization. Students will learn practical skills for working with real-world datasets.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/data-science-fundamentals/";
+            },},{id: "teachings-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "This course provides an introduction to machine learning concepts, algorithms, and applications. Students will learn about supervised and unsupervised learning, model evaluation, and practical implementations.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teachings/introduction-to-machine-learning/";
+            },},{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%73%79%6C%65%65%6D%6A%32%33@%67%6D%61%69%6C.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/syleemj23", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/syleemj23", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> <script data-language-search="en">
+  (() => {
+    const settings = {"records":[{"id":"language-content-0","title":"Sangyeon Lee","description":"Digital Forensics","section":"Navigation","destination":"/en/","external":false},{"id":"language-content-1","title":"Projects","description":"Goals, processes, and results from my digital forensics projects.","section":"Navigation","destination":"/en/projects/","external":false},{"id":"language-content-2","title":"Notes","description":"","section":"Navigation","destination":"/en/blog/","external":false},{"id":"language-content-3","title":"Types of Digital Evidence","description":"Exculpatory vs. Inculpatory Class vs. Individual","section":"Notes","destination":"/en/blog/locards-exchange-principle/","external":false},{"id":"language-content-4","title":"Locard’s Exchange Principle","description":"Physical Traces, Digital Traces","section":"Notes","destination":"/en/blog/locards-exchange-principle/","external":false},{"id":"language-content-5","title":"Android Memory Acquisition and Analysis for WhatsApp","description":"system memory acquisition, application memory acquisition, string analysis.","section":"Projects","destination":"/en/projects/whatsapp-memory/","external":false}],"prefixes":["nav-","dropdown-","post-","language-content-","posts-","books-","news-","projects-","teachings-"],"placeholder":"Type to start searching"};
+    const search = document.querySelector('ninja-keys');
+    if (!search) return;
+    const commands = (Array.isArray(search.data) ? search.data : []).filter(
+      item => !settings.prefixes.some(prefix => String(item.id || '').startsWith(prefix))
+    );
+    const content = settings.records.map(record => ({
+      id: record.id,
+      title: record.title,
+      description: record.description,
+      section: record.section,
+      handler: () => {
+        if (record.external) {
+          window.open(record.destination, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.href = record.destination;
+        }
+      }
+    }));
+    search.data = [...content, ...commands];
+    search.setAttribute('placeholder', settings.placeholder);
+  })();
+</script> </body> </html>
